@@ -11,6 +11,11 @@ class PostgresqlAT124 < Formula
     regex(/Release v?(\d+(?:\.\d+)+)/i)
   end
 
+  bottle do
+    root_url "https://github.com/klaxit/homebrew-postgresql/releases/download/postgresql@12.4-12.4"
+    sha256 catalina: "fcf392a2f22280cf706650e6c83cc4cba714a44670c84f476f97388e168af576"
+  end
+
   depends_on "pkg-config" => :build
   depends_on "icu4c"
 
