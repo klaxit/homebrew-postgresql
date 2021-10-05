@@ -76,10 +76,12 @@ class PostgresqlAT124 < Formula
   end
 
   def post_install
-    return if ENV["CI"]
-
     (var/"log").mkpath
     (var/"postgres").mkpath
+
+    # Don't initialize database, it clashes when testing other PostgreSQL versions.
+    return if ENV["HOMEBREW_GITHUB_ACTIONS"]
+
     unless File.exist? "#{var}/postgres/PG_VERSION"
       system "#{bin}/initdb", "--locale=C", "-E", "UTF-8", "#{var}/postgres"
     end
@@ -129,7 +131,7 @@ class PostgresqlAT124 < Formula
   end
 
   test do
-    system "#{bin}/initdb", testpath/"test" unless ENV["CI"]
+    system "#{bin}/initdb", testpath/"test" unless ENV["HOMEBREW_GITHUB_ACTIONS"]
     assert_equal "#{HOMEBREW_PREFIX}/share/postgresql", shell_output("#{bin}/pg_config --sharedir").chomp
     assert_equal "#{HOMEBREW_PREFIX}/lib", shell_output("#{bin}/pg_config --libdir").chomp
     assert_equal "#{HOMEBREW_PREFIX}/lib/postgresql", shell_output("#{bin}/pg_config --pkglibdir").chomp
