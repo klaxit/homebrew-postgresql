@@ -11,6 +11,11 @@ class PostgresqlAT134 < Formula
     regex(%r{href=["']?v?(\d+(?:\.\d+)+)/?["' >]}i)
   end
 
+  bottle do
+    root_url "https://github.com/klaxit/homebrew-postgresql/releases/download/postgresql@13.4-13.4"
+    sha256 catalina: "f63d47ab1e8a6db66d71de3ae8e4513e17adcf387828dbc8186669e68301b496"
+  end
+
   depends_on "pkg-config" => :build
   depends_on "icu4c"
 
